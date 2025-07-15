@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代OA办公自动化解决方案演示脚本</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --klein-blue: #002FA7;
+            --klein-blue-light: #2046B3;
+            --klein-blue-dark: #001F73;
+            --accent-color: #00E4FF;
+            --text-color: #333;
+            --bg-color: #f5f8ff;
+            --card-bg: #fff;
+            --section-bg: rgba(0, 47, 167, 0.03);
+            --border-color: #e1e8f0;
+            --hover-bg: #f8faff;
+            --shadow: 0 10px 30px rgba(0, 47, 167, 0.10);
+            --shadow-hover: 0 16px 40px rgba(0, 47, 167, 0.16);
+            --radius: 15px;
+            --font-main: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, var(--klein-blue), var(--klein-blue-dark));
+            color: #ffffff;
+            padding: 1em 2em;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #f0f4ff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            background-color: rgba(255,255,255,0.15);
+            color: var(--accent-color);
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: var(--radius);
+            transition: background-color 0.3s ease;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 32px 20px 40px 20px;
+            max-width: 1200px;
+            margin: 2em auto;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--klein-blue), var(--klein-blue-dark));
+            color: #ffffff;
+            border-radius: var(--radius);
+            margin-top: -2em;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.12;
+            z-index: 1;
+        }
+        .cover-content {
+            position: relative;
+            z-index: 2;
+        }
+        .cover-page h1 {
+            font-size: 3.2rem;
+            margin-bottom: 18px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.18), 0 4px 24px rgba(0,0,0,0.10);
+            letter-spacing: 1px;
+        }
+        .cover-page .subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 36px;
+            font-weight: 500;
+            color: #f0f4ff;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.12);
+        }
+        .cover-page .author, .cover-page .date {
+            font-size: 1.1em;
+            color: #ced4da;
+        }
+        .cover-page .date {
+            margin-top: 30px;
+        }
+
+        /* Document Sections */
+        .document-section {
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+        .document-section:last-of-type {
+             margin-bottom: 0;
+        }
+
+        /* Chapter Headers */
+        .chapter-header {
+            margin-bottom: 36px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--klein-blue);
+            display: flex;
+            align-items: center;
+        }
+        .chapter-header .chapter-tag {
+            background: linear-gradient(135deg, var(--klein-blue), var(--accent-color));
+            color: #ffffff;
+            padding: 8px 15px;
+            margin-right: 15px;
+            border-radius: var(--radius);
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .chapter-header h2 {
+            margin: 0;
+            font-size: 2.2em;
+            color: var(--klein-blue);
+            font-weight: 700;
+        }
+
+        /* Typography */
+        h3 {
+            font-size: 1.8em;
+            color: var(--klein-blue-light);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        h4 {
+            font-size: 1.4em;
+            color: var(--klein-blue);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        h5 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        p {
+            line-height: 1.8;
+            margin: 16px 0;
+            color: var(--text-color);
+        }
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        strong {
+            color: var(--klein-blue-dark);
+        }
+
+        /* Case Cards */
+        .case-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 36px 28px;
+            margin-bottom: 40px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .case-card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: var(--shadow-hover);
+        }
+        .case-card h3 {
+            margin-top: 0;
+            color: var(--klein-blue);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        /* Feature List */
+        .feature-list {
+            margin-top: 15px;
+        }
+        .feature-list .feature-item {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.08), rgba(0, 123, 255, 0.04));
+            border-left: 4px solid var(--accent-color);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-list .feature-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .feature-list .feature-item strong {
+            color: var(--klein-blue);
+            font-weight: 600;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: var(--section-bg);
+            padding: 24px;
+            border-radius: var(--radius);
+            margin: 24px 0;
+            border: 1px solid var(--border-color);
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .result-item {
+            text-align: center;
+            padding: 16px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .result-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--klein-blue);
+            margin-bottom: 8px;
+        }
+        .result-label {
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        /* Video Production Section */
+        .video-production {
+            background: linear-gradient(135deg, rgba(0, 47, 167, 0.05), rgba(0, 228, 255, 0.05));
+            padding: 24px;
+            border-radius: var(--radius);
+            margin: 24px 0;
+            border: 1px solid var(--accent-color);
+        }
+        .video-production h5 {
+            color: var(--klein-blue);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .video-production h5::before {
+            content: '🎬';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .video-shot {
+            background: var(--card-bg);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, var(--klein-blue), var(--klein-blue-dark));
+            color: #ffffff;
+            padding: 40px;
+            border-radius: var(--radius);
+            margin-top: 40px;
+            text-align: center;
+        }
+        .summary-section h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .summary-section p {
+            color: #f0f4ff;
+            font-size: 1.1em;
+        }
+
+        /* Notice Section */
+        .notice-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+        }
+        .notice-section strong {
+            color: #856404;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, var(--klein-blue), var(--klein-blue-dark));
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            nav ul.show {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul li {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 15px 2em;
+                text-align: left;
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .cover-page h1 {
+                font-size: 2.5rem;
+            }
+            .cover-page .subtitle {
+                font-size: 1.3rem;
+            }
+            main {
+                margin: 1em;
+                padding: 20px 15px;
+            }
+            .chapter-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .chapter-header .chapter-tag {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#" class="logo">AI办公自动化演示</a>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul id="mobile-menu">
+            <li><a href="#case1" class="nav-link" onclick="closeMobileMenu()">会议解决方案</a></li>
+            <li><a href="#case2" class="nav-link" onclick="closeMobileMenu()">自动化提单</a></li>
+            <li><a href="#case3" class="nav-link" onclick="closeMobileMenu()">管理自动化</a></li>
+            <li><a href="#summary" class="nav-link" onclick="closeMobileMenu()">总结</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Cover Page -->
+        <section class="cover-page">
+            <div class="cover-content">
+                <h1>AI时代OA办公自动化解决方案</h1>
+                <p class="subtitle">演示脚本</p>
+                <p class="author">智能办公解决方案团队</p>
+                <p class="date">2024年12月</p>
+            </div>
+        </section>
+
+        <!-- Case 1: 一体化会议解决方案 -->
+        <section id="case1" class="document-section">
+            <div class="chapter-header">
+                <span class="chapter-tag">案例1</span>
+                <h2>一体化会议解决方案</h2>
+            </div>
+            
+            <div class="case-card">
+                <h3>场景介绍</h3>
+                <p>某大型企业集团拥有多个分公司和部门，每天需要召开大量会议，传统的会议管理流程繁琐且效率低下。通过部署AI智能体一体化会议解决方案，实现了从会议预约到会后跟进的全流程自动化管理。</p>
+                
+                <h4>关键功能</h4>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <strong>智能预约参会人日程</strong>：AI智能体自动分析参会人员的日程安排，找到最佳会议时间
+                    </div>
+                    <div class="feature-item">
+                        <strong>自动定会议室</strong>：根据会议规模和需求自动匹配并预订合适的会议室
+                    </div>
+                    <div class="feature-item">
+                        <strong>会议助手会前通知</strong>：自动发送会议提醒、议程和相关资料给参会人员
+                    </div>
+                    <div class="feature-item">
+                        <strong>会中互动支持</strong>：实时记录会议内容，提供智能问答和决策支持
+                    </div>
+                    <div class="feature-item">
+                        <strong>会后总结生成</strong>：自动生成会议纪要、决议事项和行动计划
+                    </div>
+                    <div class="feature-item">
+                        <strong>会后待办跟进</strong>：自动创建待办事项并分配给相关责任人，定期跟进执行进度
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <h4>关键成果</h4>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <div class="result-value">85%</div>
+                            <div class="result-label">会议安排效率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">60%</div>
+                            <div class="result-label">会议室利用率提高</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">5分钟</div>
+                            <div class="result-label">会议纪要生成时间<br>（原2小时）</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">70%</div>
+                            <div class="result-label">待办事项执行率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">40%</div>
+                            <div class="result-label">员工满意度提升</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-production">
+                    <h5>MP4演示视频制作建议</h5>
+                    <div class="video-shot">镜头1：展示传统会议安排的繁琐流程（快进展示员工手动查看日程、打电话协调时间、预订会议室等场景）</div>
+                    <div class="video-shot">镜头2：AI智能体界面演示 - 用户输入会议需求，系统自动分析参会人日程并推荐最佳时间</div>
+                    <div class="video-shot">镜头3：会议室自动预订界面 - 系统根据人数和需求自动匹配会议室并完成预订</div>
+                    <div class="video-shot">镜头4：会前通知发送 - 展示系统自动发送的会议邀请和提醒消息</div>
+                    <div class="video-shot">镜头5：会议进行中 - AI助手实时记录会议内容，提供智能问答</div>
+                    <div class="video-shot">镜头6：会后自动生成的会议纪要和待办事项分配界面</div>
+                    <div class="video-shot">镜头7：数据对比图表 - 展示实施前后的效率提升数据</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case 2: 自动化提单解决方案 -->
+        <section id="case2" class="document-section">
+            <div class="chapter-header">
+                <span class="chapter-tag">案例2</span>
+                <h2>自动化提单解决方案</h2>
+            </div>
+            
+            <div class="case-card">
+                <h3>场景介绍</h3>
+                <p>某跨国公司员工出差频繁，传统的差旅申请和报销流程复杂，员工需要手动填写大量表单，财务审核工作量巨大。通过AI智能体自动化提单系统，实现了差旅全流程的智能化管理。</p>
+                
+                <h4>关键功能</h4>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <strong>差旅自动提单</strong>：根据出差需求自动生成差旅申请单，智能建议最优出行方案
+                    </div>
+                    <div class="feature-item">
+                        <strong>差旅关怀服务</strong>：出差前提供天气提醒、交通信息、当地服务推荐等贴心服务
+                    </div>
+                    <div class="feature-item">
+                        <strong>差旅后报销提醒</strong>：出差结束后自动提醒员工提交报销申请，并协助整理相关票据
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <h4>关键成果</h4>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <div class="result-value">3分钟</div>
+                            <div class="result-label">差旅申请处理时间<br>（原30天）</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">90%</div>
+                            <div class="result-label">报销申请完成率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">25%</div>
+                            <div class="result-label">差旅成本节约</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">80%</div>
+                            <div class="result-label">财务审核效率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">50%</div>
+                            <div class="result-label">员工差旅体验满意度提升</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-production">
+                    <h5>MP4演示视频制作建议</h5>
+                    <div class="video-shot">镜头1：传统差旅申请流程 - 员工手动填写复杂表单，等待层层审批的场景</div>
+                    <div class="video-shot">镜头2：AI智能提单界面 - 员工简单输入出差目的地和时间，系统自动生成完整申请单</div>
+                    <div class="video-shot">镜头3：智能出行方案推荐 - 系统展示多种出行方案对比（航班、酒店、租车等）</div>
+                    <div class="video-shot">镜头4：差旅关怀服务 - 手机收到天气提醒、交通状况、餐厅推荐等贴心服务</div>
+                    <div class="video-shot">镜头5：自动报销提醒 - 出差结束后收到报销提醒，系统协助整理电子票据</div>
+                    <div class="video-shot">镜头6：一键提交报销 - 展示简化的报销流程和快速审批</div>
+                    <div class="video-shot">镜头7：成本节约和效率提升的数据展示图表</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case 3: 管理自动化解决方案 -->
+        <section id="case3" class="document-section">
+            <div class="chapter-header">
+                <span class="chapter-tag">案例3</span>
+                <h2>管理自动化解决方案</h2>
+            </div>
+            
+            <div class="case-card">
+                <h3>场景介绍</h3>
+                <p>某科技公司采用OKR管理模式，但在目标制定、项目拆解、进度跟踪等环节存在效率瓶颈。通过AI智能体管理自动化系统，实现了从战略目标到具体执行的全链条智能化管理。</p>
+                
+                <h4>关键功能</h4>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <strong>OKR撰写与优化</strong>：AI协助员工制定SMART原则的OKR，提供优化建议
+                    </div>
+                    <div class="feature-item">
+                        <strong>OKR到项目的拆解</strong>：自动将OKR目标拆解为具体的项目任务和里程碑
+                    </div>
+                    <div class="feature-item">
+                        <strong>智能项目管理</strong>：自动分配资源、监控进度、预警风险
+                    </div>
+                    <div class="feature-item">
+                        <strong>项目周报生成</strong>：自动收集项目数据，生成详细的项目进展报告
+                    </div>
+                    <div class="feature-item">
+                        <strong>个人周报生成</strong>：基于个人工作数据自动生成个性化工作总结
+                    </div>
+                    <div class="feature-item">
+                        <strong>OKR进度自动追踪</strong>：实时监控OKR完成情况，提供数据分析和改进建议
+                    </div>
+                </div>
+                
+                <div class="results-section">
+                    <h4>关键成果</h4>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <div class="result-value">60%</div>
+                            <div class="result-label">OKR制定质量提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">45%</div>
+                            <div class="result-label">项目按时完成率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">70%</div>
+                            <div class="result-label">管理层决策效率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">80%</div>
+                            <div class="result-label">员工工作汇报时间节约</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">35%</div>
+                            <div class="result-label">目标达成率提升</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value">55%</div>
+                            <div class="result-label">团队协作效率提升</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-production">
+                    <h5>MP4演示视频制作建议</h5>
+                    <div class="video-shot">镜头1：传统OKR制定场景 - 员工苦思冥想写OKR，管理层反复修改的场景</div>
+                    <div class="video-shot">镜头2：AI辅助OKR撰写 - 系统根据公司战略和个人职责智能推荐OKR模板</div>
+                    <div class="video-shot">镜头3：OKR自动拆解 - 展示系统将抽象目标自动分解为具体项目和任务</div>
+                    <div class="video-shot">镜头4：项目管理仪表板 - 实时显示项目进度、资源分配、风险预警</div>
+                    <div class="video-shot">镜头5：自动生成的项目周报和个人周报界面展示</div>
+                    <div class="video-shot">镜头6：OKR进度追踪仪表板 - 实时显示目标完成情况和趋势分析</div>
+                    <div class="video-shot">镜头7：管理层查看整体数据分析报告，做出快速决策</div>
+                    <div class="video-shot">镜头8：前后对比数据图表 - 展示实施AI管理自动化后的各项指标提升</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section id="summary" class="document-section">
+            <div class="summary-section">
+                <h3>总结</h3>
+                <p>以上三个案例展示了AI智能体在不同办公场景下的成功应用，从会议管理到差旅服务，再到战略执行管理，全面提升了企业的运营效率和员工体验。随着更多成功案例的积累，我们将持续补充和完善演示内容，为客户提供更多参考和借鉴。</p>
+            </div>
+            
+            <div class="notice-section">
+                <strong>注意事项</strong>：演示前检查所有设备和演示环境，确保流畅无误。针对不同客户背景，适当调整专业术语使用。
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript for smooth scrolling -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Update active navigation link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.document-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('show');
+        }
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.remove('show');
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menu = document.getElementById('mobile-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+        });
+        
+        // Close menu on window resize if it's open
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

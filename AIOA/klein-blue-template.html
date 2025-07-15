@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>克莱因蓝科技风网页模板</title>
+    <style>
+        :root {
+            --klein-blue: #002FA7;
+            --klein-blue-light: #2046B3;
+            --klein-blue-dark: #001F73;
+            --accent-color: #00E4FF;
+            --text-color: #333;
+            --bg-color: #f5f8ff;
+            --card-bg: #fff;
+            --section-bg: rgba(0, 47, 167, 0.03);
+            --shadow: 0 10px 30px rgba(0, 47, 167, 0.10);
+            --shadow-hover: 0 16px 40px rgba(0, 47, 167, 0.16);
+            --radius: 15px;
+            --font-main: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, var(--klein-blue), var(--klein-blue-dark));
+            color: white;
+            padding: 60px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 24px;
+        }
+        .header-content::before {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; top: 0; bottom: 0;
+            background: linear-gradient(180deg,rgba(0,0,0,0.22),rgba(0,0,0,0.12) 60%,transparent 100%);
+            z-index: -1;
+        }
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.12;
+        }
+        .header-bg .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .header-bg .circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .header-bg .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+        .circle-1 {
+            width: 320px;
+            height: 320px;
+            top: -100px;
+            right: -60px;
+        }
+        .circle-2 {
+            width: 180px;
+            height: 180px;
+            bottom: -60px;
+            left: 12%;
+        }
+        .title-main {
+            color: #fff;
+            font-size: 3.2rem;
+            margin-bottom: 18px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.18), 0 4px 24px rgba(0,0,0,0.10);
+            letter-spacing: 1px;
+            opacity: 1;
+        }
+        .title-sub {
+            color: #f0f4ff;
+            font-size: 1.6rem;
+            margin-bottom: 36px;
+            font-weight: 500;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 1;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.12);
+        }
+        .framework-box {
+            background-color: rgba(0,0,0,0.18);
+            border-radius: 15px;
+            padding: 24px 32px;
+            margin: 0 auto;
+            display: inline-block;
+            box-shadow: 0 8px 32px rgba(0,47,167,0.10);
+            text-align: left;
+        }
+        .framework-title {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        .framework-list {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px 40px 20px;
+        }
+        .title-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 36px;
+        }
+        .title-bar .accent {
+            width: 8px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 4px;
+            margin-right: 18px;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--klein-blue);
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        h2, h3 {
+            color: var(--klein-blue-light);
+            font-weight: 600;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 30px;
+            background-color: var(--accent-color);
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        p {
+            line-height: 1.8;
+            margin: 16px 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 36px 28px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: var(--shadow-hover);
+        }
+        .card .icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--klein-blue), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+        }
+        .section {
+            background: var(--section-bg);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            margin-bottom: 36px;
+        }
+        .timeline {
+            position: relative;
+            margin: 40px 0 40px 24px;
+            padding-left: 24px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(var(--klein-blue), var(--accent-color));
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,47,167,0.12);
+        }
+        .timeline-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px 24px;
+            margin-left: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+        }
+        th {
+            background: var(--klein-blue);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f5f5f5;
+        }
+        @media (max-width: 900px) {
+            .container {
+                padding: 12px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .section, .card, .timeline-content {
+                padding: 18px 8px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+        footer {
+            background: linear-gradient(135deg, var(--klein-blue-dark), var(--klein-blue));
+            color: white;
+            padding: 36px 0 18px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .copyright {
+            margin-top: 18px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg">
+            <div class="grid"></div>
+            <div class="circles">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+            </div>
+        </div>
+        <div class="header-content">
+            <h1 class="title-main">克莱因蓝科技风网页模板</h1>
+            <h2 class="title-sub">网页头部采用深克莱因蓝渐变、网格线、圆形装饰，主副标题居中，卡片浮层等风格，适用于科技感强的企业官网或专题页</h2>
+            <div class="framework-box">
+                <div class="framework-title">3231战略框架</div>
+                <div class="framework-list">
+                    <ul>
+                        <li>3个优先场景：团队画像、OKR进展、采购报告</li>
+                        <li>2大基建：闹海+平台和业务系统MCP化</li>
+                        <li>3条运营路径：AI训练师体系、AI工作坊、AI感知度运营</li>
+                        <li>1群AI原生人才："闹海·原力场"AI Native人才升级计划</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="title-bar">
+            <div class="accent"></div>
+            <h1>克莱因蓝科技风网页模板</h1>
+        </div>
+        <div class="section">
+            <h2>风格说明</h2>
+            <p><strong>实体类型：</strong>设计风格</p>
+            <h3>特点描述：</h3>
+            <ol>
+                <li><strong>色彩系统：</strong>以克莱因蓝(<span style="color:#002FA7">#002FA7</span>)为主色调，搭配浅色变体(<span style="color:#2046B3">#2046B3</span>)和深色变体(<span style="color:#001F73">#001F73</span>)，使用亮青色(<span style="color:#00E4FF">#00E4FF</span>)作为强调色，浅蓝背景(<span style="color:#f5f8ff">#f5f8ff</span>)与白色卡片形成层次</li>
+                <li><strong>布局特点：</strong>采用圆角卡片设计(border-radius: 15px)，使用CSS Grid创建灵活的二列和三列布局，具有响应式设计和负边距设计</li>
+                <li><strong>视觉元素：</strong>蓝色渐变背景，几何装饰元素(网格线和圆形)，标题前使用青色竖条作为视觉强调，垂直时间线组件，卡片悬停动画效果</li>
+                <li><strong>排版系统：</strong>现代无衬线字体，清晰的标题层级，使用蓝色和粗体突出关键信息，良好的行高和段落间距</li>
+                <li><strong>组件设计：</strong>专业表格样式，半透明深色背景框架盒子，带图标的特性卡片，浅蓝色背景子区块</li>
+                <li><strong>整体风格：</strong>将克莱因蓝作为主色调，结合现代科技元素和简洁排版，营造专业前沿的科技感，呈现清晰的信息架构和愉悦的用户体验</li>
+            </ol>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="icon">💡</div>
+                <h3>灵活布局</h3>
+                <p>采用CSS Grid实现二列、三列自适应布局，适配不同屏幕，信息分区清晰。</p>
+            </div>
+            <div class="card">
+                <div class="icon">🔷</div>
+                <h3>克莱因蓝主色</h3>
+                <p>以克莱因蓝为主色，搭配亮青色强调，营造科技感与视觉冲击力。</p>
+            </div>
+            <div class="card">
+                <div class="icon">🖥️</div>
+                <h3>现代科技感</h3>
+                <p>圆角卡片、渐变背景、几何装饰，结合现代无衬线字体，整体风格简洁专业。</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>垂直时间线示例</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>2022</strong> - 项目立项与需求分析
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>2023</strong> - 设计开发与测试上线
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>2024</strong> - 迭代优化与推广应用
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>专业表格样式示例</h2>
+            <table>
+                <tr>
+                    <th>组件</th>
+                    <th>用途</th>
+                    <th>风格说明</th>
+                </tr>
+                <tr>
+                    <td>卡片</td>
+                    <td>信息分区</td>
+                    <td>圆角、阴影、悬停动画</td>
+                </tr>
+                <tr>
+                    <td>时间线</td>
+                    <td>展示进度</td>
+                    <td>蓝色渐变线、圆点节点</td>
+                </tr>
+                <tr>
+                    <td>表格</td>
+                    <td>数据展示</td>
+                    <td>主色表头、斑马纹行</td>
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <h2>AI发展史旅程图示例</h2>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <svg width="100%" height="340" viewBox="0 0 900 340" style="max-width:900px; min-width:320px;">
+                    <defs>
+                        <linearGradient id="timeline-gradient" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#2046B3" />
+                            <stop offset="100%" stop-color="#002FA7" />
+                        </linearGradient>
+                        <linearGradient id="path-gradient" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#2046B3" stop-opacity="0.7" />
+                            <stop offset="50%" stop-color="#00E4FF" stop-opacity="0.6" />
+                            <stop offset="100%" stop-color="#002FA7" stop-opacity="0.7" />
+                        </linearGradient>
+                        <filter id="node-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#002FA7" flood-opacity="0.10"/>
+                        </filter>
+                        <filter id="path-glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="2" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                        <filter id="text-bg" x="-10%" y="-10%" width="120%" height="120%">
+                            <feFlood flood-color="#ffffff" flood-opacity="0.9" result="flood"/>
+                            <feComposite in="flood" in2="SourceGraphic" operator="in" result="text-comp"/>
+                            <feGaussianBlur in="text-comp" stdDeviation="1" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+                    <!-- 渐变主线 -->
+                    <line x1="80" y1="120" x2="820" y2="120" stroke="url(#timeline-gradient)" stroke-width="5" stroke-linecap="round" />
+                    
+                    <!-- 优美的连接曲线 -->
+                    <path d="M80,120 
+                             C130,80 180,160 220,120 
+                             C260,80 310,160 360,120 
+                             C410,80 450,160 500,120 
+                             C550,80 590,160 640,120 
+                             C690,80 730,160 780,120" 
+                          stroke="url(#path-gradient)" 
+                          stroke-width="5" 
+                          fill="none" 
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          filter="url(#path-glow)"
+                          opacity="0.85">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="3s" begin="0s" fill="freeze" />
+                        <animate attributeName="opacity" values="0.6;0.85;0.6" dur="4s" repeatCount="indefinite" />
+                    </path>
+                    <style>
+                        @keyframes pulse {
+                            0% { transform: scale(1); }
+                            50% { transform: scale(1.05); }
+                            100% { transform: scale(1); }
+                        }
+                    </style>
+                    
+                    <!-- 节点组 -->
+                    <!-- 1943 神经元 -->
+                    <g>
+                        <circle cx="80" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 神经元SVG图标 -->
+                        <g transform="translate(80, 120) scale(0.018)">
+                            <path d="M0,-800 C-450,-800 -800,-450 -800,0 C-800,450 -450,800 0,800 C450,800 800,450 800,0 C800,-450 450,-800 0,-800 Z" fill="none" stroke="#2046B3" stroke-width="120" />
+                            <path d="M-350,-350 L350,350 M-350,350 L350,-350 M-500,0 L500,0 M0,-500 L0,500" stroke="#2046B3" stroke-width="100" stroke-linecap="round" />
+                        </g>
+                        <text x="80" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">1943</text>
+                        <g filter="url(#text-bg)">
+                            <text x="80" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">麦卡洛克-皮茨模型</text>
+                            <text x="80" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666" width="120">
+                                <tspan x="80" y="200" text-anchor="middle">首个数学神经元模型，为人工</tspan>
+                                <tspan x="80" y="216" text-anchor="middle">神经网络奠定了生物学基础。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <!-- 1956 AI诞生 -->
+                    <g>
+                        <circle cx="220" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 灯泡SVG图标 -->
+                        <g transform="translate(220, 120) scale(0.022)">
+                            <path d="M0,-500 C-200,-500 -350,-350 -350,-150 C-350,50 -200,200 0,200 C200,200 350,50 350,-150 C350,-350 200,-500 0,-500 Z" fill="none" stroke="#2046B3" stroke-width="100" />
+                            <path d="M-150,200 L-150,400 L150,400 L150,200" stroke="#2046B3" stroke-width="100" stroke-linecap="round" />
+                            <path d="M-100,50 L100,50 M-150,-100 L150,-100 M-100,-250 L100,-250" stroke="#2046B3" stroke-width="80" stroke-linecap="round" />
+                        </g>
+                        <text x="220" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">1956</text>
+                        <g filter="url(#text-bg)">
+                            <text x="220" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">达特茅斯会议</text>
+                            <text x="220" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666">
+                                <tspan x="220" y="200" text-anchor="middle">人工智能学科正式诞生，确立</tspan>
+                                <tspan x="220" y="216" text-anchor="middle">了AI作为独立研究领域。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <!-- 1986 反向传播 -->
+                    <g>
+                        <circle cx="360" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 齿轮SVG图标 -->
+                        <g transform="translate(360, 120) scale(0.020)">
+                            <circle cx="0" cy="0" r="350" fill="none" stroke="#2046B3" stroke-width="100" />
+                            <circle cx="0" cy="0" r="150" fill="none" stroke="#2046B3" stroke-width="80" />
+                            <path d="M-600,0 L-400,0 M400,0 L600,0 M0,-600 L0,-400 M0,400 L0,600 M-424,-424 L-283,-283 M424,-424 L283,-283 M-424,424 L-283,283 M424,424 L283,283" stroke="#2046B3" stroke-width="100" stroke-linecap="round" />
+                        </g>
+                        <text x="360" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">1986</text>
+                        <g filter="url(#text-bg)">
+                            <text x="360" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">BP算法突破</text>
+                            <text x="360" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666">
+                                <tspan x="360" y="200" text-anchor="middle">反向传播算法使神经网络有效</tspan>
+                                <tspan x="360" y="216" text-anchor="middle">训练成为可能，结束AI第一次寒冬。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <!-- 2012 AlexNet -->
+                    <g>
+                        <circle cx="500" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 火箭SVG图标 -->
+                        <g transform="translate(500, 120) scale(0.020)">
+                            <path d="M0,-550 C-100,-450 -150,-350 -150,0 C-150,100 -100,200 0,250 C100,200 150,100 150,0 C150,-350 100,-450 0,-550 Z" fill="none" stroke="#2046B3" stroke-width="100" stroke-linejoin="round" />
+                            <path d="M-100,250 L-200,450 M100,250 L200,450" stroke="#2046B3" stroke-width="80" stroke-linecap="round" />
+                            <circle cx="0" cy="-150" r="100" fill="none" stroke="#2046B3" stroke-width="80" />
+                        </g>
+                        <text x="500" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">2012</text>
+                        <g filter="url(#text-bg)">
+                            <text x="500" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">深度学习崛起</text>
+                            <text x="500" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666">
+                                <tspan x="500" y="200" text-anchor="middle">AlexNet在ImageNet竞赛中大幅</tspan>
+                                <tspan x="500" y="216" text-anchor="middle">领先，掀起深度学习革命。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <!-- 2017 Transformer -->
+                    <g>
+                        <circle cx="640" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 机器人SVG图标 -->
+                        <g transform="translate(640, 120) scale(0.020)">
+                            <rect x="-300" y="-500" width="600" height="700" rx="100" ry="100" fill="none" stroke="#2046B3" stroke-width="100" />
+                            <circle cx="-150" cy="-250" r="80" fill="#2046B3" />
+                            <circle cx="150" cy="-250" r="80" fill="#2046B3" />
+                            <path d="M-150,0 L150,0 M-200,200 L-200,400 M200,200 L200,400" stroke="#2046B3" stroke-width="80" stroke-linecap="round" />
+                            <path d="M-100,-500 L-100,-650 M100,-500 L100,-650" stroke="#2046B3" stroke-width="80" />
+                        </g>
+                        <text x="640" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">2017</text>
+                        <g filter="url(#text-bg)">
+                            <text x="640" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">注意力机制革命</text>
+                            <text x="640" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666">
+                                <tspan x="640" y="200" text-anchor="middle">Transformer架构突破序列处理</tspan>
+                                <tspan x="640" y="216" text-anchor="middle">瓶颈，为大语言模型奠定基础。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <!-- 2022 ChatGPT -->
+                    <g>
+                        <circle cx="780" cy="120" r="24" fill="#fff" stroke="url(#timeline-gradient)" stroke-width="4" filter="url(#node-shadow)" />
+                        <!-- 对话气泡SVG图标 -->
+                        <g transform="translate(780, 120) scale(0.020)">
+                            <path d="M-350,-350 C-450,-350 -550,-250 -550,-150 L-550,150 C-550,250 -450,350 -350,350 L0,350 L100,500 L200,350 L350,350 C450,350 550,250 550,150 L550,-150 C550,-250 450,-350 350,-350 Z" fill="none" stroke="#2046B3" stroke-width="100" />
+                            <path d="M-250,-50 L250,-50 M-250,50 L150,50" stroke="#2046B3" stroke-width="80" stroke-linecap="round" />
+                        </g>
+                        <text x="780" y="70" text-anchor="middle" font-size="15" font-family="Arial, sans-serif" fill="#2046B3" font-weight="bold">2022</text>
+                        <g filter="url(#text-bg)">
+                            <text x="780" y="170" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="bold" fill="#002FA7">生成式AI爆发</text>
+                            <text x="780" y="190" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#666">
+                                <tspan x="780" y="200" text-anchor="middle">ChatGPT引爆AIGC浪潮，人工</tspan>
+                                <tspan x="780" y="216" text-anchor="middle">智能开始进入大众日常生活。</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </svg>
+                <div style="max-width:900px; margin-top:18px; color:#2046B3; font-size:15px; text-align:center;">
+                    <strong>AI发展史关键节点：</strong> 神经元模型（1943）→ AI诞生（1956）→ 反向传播（1986）→ 深度学习突破（2012）→ Transformer（2017）→ ChatGPT（2022）
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <h3>克莱因蓝科技风模板</h3>
+            <p>科技感、专业感、愉悦体验的网页设计参考</p>
+            <p class="copyright">© 2024 Klein Blue Web Template. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
